@@ -12,14 +12,18 @@ import moment from "moment";
 import { fetchPosts } from "../actions";
 
 export function getDate(tdate) {
-  const pD =  (tdate === "c" || tdate === "p") ? moment(new Date()).format("DD/MM/YYYY") : tdate
+  const pD =
+    tdate === "c" || tdate === "p"
+      ? moment(new Date()).format("DD/MM/YYYY")
+      : tdate;
   const p = moment(pD, ["DD/MM/YYYY"]).format("YYYY-MM-DD");
- 
+
   return p;
 }
 
 export function getUTCDate(tdate) {
-  const pD =  (tdate === "c" || tdate === "p") ? moment().format("DD/MM/YYYY") : tdate;
+  const pD =
+    tdate === "c" || tdate === "p" ? moment().format("DD/MM/YYYY") : tdate;
   const p = moment(pD, ["DD/MM/YYYY"]).format("x");
   return Number(p);
 }
@@ -29,17 +33,10 @@ class VisTime extends Component {
     this.state = {
       drawCharts: false,
       skillConfig: {
-        title: {
-          text: ""
-        },
-
+        title: false,
         legend: {},
-        credits: {
-          enabled: false
-        },
-        subtitle: {
-          text: ""
-        },
+        credits: false,
+        subtitle: false,
         chart: {
           type: "column",
           backgroundColor: "#27293d"
@@ -49,7 +46,6 @@ class VisTime extends Component {
         },
         yAxis: [
           {
-            className: "highcharts-color-0",
             title: {
               text: "Percentage"
             }
@@ -57,38 +53,109 @@ class VisTime extends Component {
         ],
         series: [{ data: [] }]
       },
-      expConfig :{
-    chart: {
-        type: 'xrange',
-         backgroundColor: "#27293d"
-    },
-    title: {
-        text: ''
-    },
-    xAxis: {
-        type: 'datetime'
-    },
-    yAxis: {
-        title: {
-            text: ''
+      expConfig: {
+        chart: {
+          type: "xrange",
+          backgroundColor: "#27293d"
         },
-        categories: [],
-        reversed: true
-    },
-    legend: {},
+        title: false,
+        xAxis: {
+          type: "datetime"
+        },
+        yAxis: {
+          title: false,
+          categories: [],
+          reversed: true
+        },
+        legend: {},
         credits: {
           enabled: false
         },
-    series: [{
-        name: '',
-        pointWidth: 20,
-        data: [],
-        dataLabels: {
-            enabled: true
-        }
-    }]
+        series: [
+          {
+            name: "Experience",
+            pointWidth: 30,
+            pointPadding: 0,
+            groupPadding: 0,
+            data: [],
+            dataLabels: {
+              enabled: true,
+              color: "#FFFFFF",
+              format: "{point.z}",
+              y: 1
+            }
+          }
+        ]
+      },
+      eduConfig: {
+        chart: {
+          type: "xrange",
+          backgroundColor: "#27293d"
+        },
+        title: false,
+        xAxis: {
+          type: "datetime"
+        },
+        yAxis: {
+          title: false,
+          categories: [],
+          reversed: true
+        },
+        legend: {},
+        credits: {
+          enabled: false
+        },
+        series: [
+          {
+            name: "Experience",
+            pointWidth: 30,
+            pointPadding: 0,
+            groupPadding: 0,
+            data: [],
+            dataLabels: {
+              enabled: true,
+              color: "#FFFFFF",
+              format: "{point.z}",
+              y: 1
+            }
+          }
+        ]
+      },
 
-},
+      awardConfig: {
+        chart: {
+          type: "xrange",
+          backgroundColor: "#27293d"
+        },
+        title: false,
+        xAxis: {
+          type: "datetime"
+        },
+        yAxis: {
+          title: false,
+          categories: [],
+          reversed: true
+        },
+        legend: {},
+        credits: {
+          enabled: false
+        },
+        series: [
+          {
+            name: "Experience",
+            pointWidth: 30,
+            pointPadding: 0,
+            groupPadding: 0,
+            data: [],
+            dataLabels: {
+              enabled: true,
+              color: "#FFFFFF",
+              format: "{point.z}",
+              y: 1
+            }
+          }
+        ]
+      },
       isLoading: true,
       loadOnce: false,
       notimeline: ["intro", "contacts", "social", "expertise", "profile"],
@@ -140,7 +207,14 @@ class VisTime extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { notimeline } = this.state;
-    let { items, skillConfig, expConfig, drawCharts } = this.state;
+    let {
+      items,
+      skillConfig,
+      expConfig,
+      eduConfig,
+      awardConfig,
+      drawCharts
+    } = this.state;
     console.log("nextProps", nextProps.posts);
     if (nextProps.posts !== this.props.posts) {
       const { posts } = nextProps.posts;
@@ -180,19 +254,27 @@ class VisTime extends Component {
                   skillConfig.xAxis.categories.push(itemx.name);
                   skillConfig.series[0].data.push(Number(itemx.percentage));
                 }
-                 if (item.type == "experience") {
-                  newI.type = "point";
-                  newI.content = `${itemx.name} : ${itemx.percentage}`;
+                if (item.type == "experience") {
                   expConfig.yAxis.categories.push(itemx.company);
-                  const SD = getUTCDate(itemx.startdate);
-                  const ED = getUTCDate(itemx.enddate)
-                  console.log(`SD ${SD} ED ${ED}`);
                   const Dateres = {
-            x: getUTCDate(itemx.startdate),
-            x2: getUTCDate(itemx.enddate),
-            y: indexx
-        }
+                    x: getUTCDate(itemx.startdate),
+                    x2: getUTCDate(itemx.enddate),
+                    y: indexx,
+                    z: itemx.name
+                  };
                   expConfig.series[0].data.push(Dateres);
+                }
+                
+                if (item.type == "education") {
+                  
+                  eduConfig.yAxis.categories.push(itemx.name);
+                  const Dateres = {
+                    x: getUTCDate(itemx.startdate),
+                    x2: getUTCDate(itemx.enddate),
+                    y: indexx,
+                    z: itemx.institute
+                  };
+                  eduConfig.series[0].data.push(Dateres);
                 }
                 items.push(newI);
                 console.log("item", newI);
@@ -207,7 +289,7 @@ class VisTime extends Component {
           groups,
           items,
           skillConfig,
-                  expConfig,
+          expConfig,
 
           drawCharts: true
         });
@@ -233,7 +315,8 @@ class VisTime extends Component {
       groups,
       skillConfig,
       drawCharts,
-      expConfig
+      expConfig,
+      eduConfig
     } = this.state;
     console.log("post", posts);
     return (
@@ -328,16 +411,18 @@ class VisTime extends Component {
               <div className="card-header">
                 <h5 className="card-category"> Experience</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Yes. I've
+                  been around.
                 </h3>
               </div>
               <div className="card-body">
-              {drawCharts && (
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={expConfig}
-                      />
-                    )}</div>
+                {drawCharts && (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={expConfig}
+                  />
+                )}
+              </div>
             </div>
           </div>{" "}
           <div className="col-4">
@@ -345,10 +430,18 @@ class VisTime extends Component {
               <div className="card-header">
                 <h5 className="card-category">Education</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Lazy
+                  isn't
                 </h3>
               </div>
-              <div className="card-body"></div>
+              <div className="card-body">
+                {drawCharts && (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={eduConfig}
+                  />
+                )}
+              </div>
             </div>
           </div>{" "}
           <div className="col-4">
@@ -356,7 +449,8 @@ class VisTime extends Component {
               <div className="card-header">
                 <h5 className="card-category"> Awards</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Happy
+                  times!
                 </h3>
               </div>
               <div className="card-body"></div>
