@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import Timeline from "react-visjs-timeline";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import HighchartsColumnRange from "highcharts/modules/columnrange";
-HighchartsColumnRange(Highcharts);
+
+import HighchartsXrange from "highcharts/modules/xrange";
+HighchartsXrange(Highcharts);
 import moment from "moment";
 import { fetchPosts } from "../actions";
 
@@ -56,45 +57,51 @@ class VisTime extends Component {
         series: [{ data: [] }]
       },
       expConfig :{
-
     chart: {
-        type: 'columnrange',
-        inverted: true
-    },title: {}, subtitle: {},
-
-    xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr']
+        type: 'xrange',
+         backgroundColor: "#27293d"
     },
-
+    title: {
+        text: ''
+    },
+    xAxis: {
+        type: 'datetime'
+    },
     yAxis: {
         title: {
-            text: 'Years'
-        }
+            text: ''
+        },
+        categories: ['Prototyping', 'Development', 'Testing'],
+        reversed: true
     },
-
-    
-
-    plotOptions: {
-        columnrange: {
-            dataLabels: {
-                enabled: true,
-                format: '{y}'
-            }
-        }
-    },
-
-    legend: {
-        enabled: false
-    },
-
     series: [{
-        name: 'Temperatures',
-        data: [
-            [2009, 2011],
-            [2011, 2013],
-            [2013, 2018],
-            [2018, 2020]
-        ]
+        name: '',
+        pointWidth: 20,
+        data: [{
+            x: Date.UTC(2014, 10, 21),
+            x2: Date.UTC(2014, 11, 2),
+            y: 0,
+            partialFill: 0.25
+        }, {
+            x: Date.UTC(2014, 11, 2),
+            x2: Date.UTC(2014, 11, 5),
+            y: 1
+        }, {
+            x: Date.UTC(2014, 11, 8),
+            x2: Date.UTC(2014, 11, 9),
+            y: 2
+        }, {
+            x: Date.UTC(2013, 11, 9),
+            x2: Date.UTC(2018, 11, 19),
+            y: 1
+        }, {
+            x: Date.UTC(2018, 11, 10),
+            x2: Date.UTC(2020, 11, 23),
+            y: 2
+        }],
+        dataLabels: {
+            enabled: true
+        }
     }]
 
 },
