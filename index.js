@@ -19,6 +19,7 @@ ReactDOM.render(
     <BrowserRouter>
     
       <div className="page-body">
+      {/**
       <nav className="navbar-absolute navbar-transparent navbar navbar-expand-lg">
    <div className="container-fluid">
       <div className="navbar-wrapper">
@@ -28,6 +29,7 @@ ReactDOM.render(
       
    </div>
 </nav>
+ */}
         <Switch>
           <Route path="/posts/new/" component={PostsNew} />
           <Route path="/posts/:id" component={PostsShow} />

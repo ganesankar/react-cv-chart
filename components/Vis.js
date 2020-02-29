@@ -331,7 +331,9 @@ awardConfig,
     } = this.state;
     console.log("post", posts);
     
-    const introContent = contentdata.find(o => o.type === 'intro')
+    const introContent = contentdata.find(o => o.type === 'intro');
+    const socialContent = contentdata.find(o => o.type === 'social');
+    console.log("socialContent", socialContent);
     return (
       <div className="page-content-wrapper">
         <div className="row">
@@ -369,15 +371,22 @@ awardConfig,
               </div>
               <div className="card-footer">
                 <div className="button-container">
-                  <button className="btn-icon btn-round btn btn-facebook">
-                    <i className="fab fa-facebook"></i>
-                  </button>
-                  <button className="btn-icon btn-round btn btn-twitter">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-                  <button className="btn-icon btn-round btn btn-google">
-                    <i className="fab fa-google-plus"></i>
-                  </button>
+
+                {socialContent &&
+          socialContent.values.length > 0 &&
+          socialContent.values.map((item, index) => {
+            return (
+              <a 
+              rel="noopener noreferrer"
+                href={item.elink}
+                target="_blank"
+                className="btn-icon btn-round btn btn-facebook">
+                    <i className={` fab  ${item.icon}`}></i> 
+                  </a>
+              
+            );
+          })}
+                
                 </div>
               </div>
             </div> )}
