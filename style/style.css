@@ -27,3 +27,14 @@ body {
     padding: 1.5rem 2.5rem calc(90px + 1.5rem);
     margin-top: 65px;
 }
+
+.highcharts-color-0 {
+	fill: #7cb5ec;
+	stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 .highcharts-axis-line {
+	stroke: #7cb5ec;
+}
+.highcharts-axis.highcharts-color-0 text {
+ /*	fill: #7cb5ec;*/
+}
