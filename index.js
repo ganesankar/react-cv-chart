@@ -10,6 +10,7 @@ import PostsShow from './components/PostsShow';
 
 import configureStore from './store';
 import './style/style.css'
+import './style/black-dashboard-react.css'
 const store = configureStore();
 
 // The <Switch> component will only show the first route contained within it that matches a pattern
@@ -17,12 +18,16 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
     
-      <div><div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-  <h5 className="my-0 mr-md-auto font-weight-normal"> Ganesan Karuppaiya</h5>
-  <nav className="my-2 my-md-0 mr-md-3">
-  </nav>
-  <a className="btn btn-outline-primary" href="#"></a>
-</div>
+      <div className="page-body">
+      <nav className="navbar-absolute navbar-transparent navbar navbar-expand-lg">
+   <div className="container-fluid">
+      <div className="navbar-wrapper">
+         <div className="navbar-toggle d-inline toggled"><button className="navbar-toggler" type="button"><span className="navbar-toggler-bar bar1"></span><span className="navbar-toggler-bar bar2"></span><span className="navbar-toggler-bar bar3"></span></button></div>
+         <a href="#pablo" className="navbar-brand">User Profile</a>
+      </div>
+      
+   </div>
+</nav>
         <Switch>
           <Route path="/posts/new/" component={PostsNew} />
           <Route path="/posts/:id" component={PostsShow} />
