@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Timeline from "react-visjs-timeline";
-
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import moment from "moment";
 import { fetchPosts } from "../actions";
 
@@ -22,15 +23,28 @@ class VisTime extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      drawCharts :false,
       skillConfig:{
+         title: {
+        text: ''
+    },
+   
+    legend: { },
+    credits: {
+        enabled: false
+    },
+    subtitle: {
+        text: ''
+    },
      chart: {
-        type: 'column'
+        type: 'column',
+         backgroundColor:'#27293d',
     },
     xAxis: {
-      categories: ['A', 'B', 'C'],
+      categories: [],
     },
     series: [
-      { data: [1, 2, 3] }
+      { data: [] }
     ]
   },
       isLoading: true,
@@ -84,7 +98,7 @@ class VisTime extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { notimeline } = this.state;
-    let { items , skillConfig} = this.state;
+    let { items , skillConfig, drawCharts} = this.state;
     console.log("nextProps", nextProps.posts);
     if (nextProps.posts !== this.props.posts) {
       const { posts } = nextProps.posts;
@@ -121,8 +135,8 @@ class VisTime extends Component {
                 if (item.type == "skills") {
                   newI.type = "point";
                   newI.content = `${itemx.name} : ${itemx.percentage}`;
-                 // skillConfig.xAxis.categories.push(itemx.name);
-                  //skillConfig.series[0].data.push(itemx.percentage);
+                  skillConfig.xAxis.categories.push(itemx.name);
+                  skillConfig.series[0].data.push(Number(itemx.percentage));
                 }
                 items.push(newI);
                 console.log("item", newI);
@@ -131,8 +145,8 @@ class VisTime extends Component {
             groups.push(grpi);
           }
         });
-        console.log("contentdata", contentdata);
-        this.setState({ contentdata, groups, items });
+        console.log("contentdata", skillConfig);
+        this.setState({ contentdata, groups, items ,skillConfig, drawCharts: true});
       }
     }
   }
@@ -147,7 +161,7 @@ class VisTime extends Component {
 
   render() {
     const { posts } = this.props;
-    const { contentdata, options, items, customTimes, groups , skillConfig} = this.state;
+    const { contentdata, options, items, customTimes, groups , skillConfig , drawCharts} = this.state;
     console.log("post", posts);
     return (
       <div className="page-content-wrapper">
@@ -198,10 +212,15 @@ class VisTime extends Component {
               <div className="card-header">
                 <h5 className="card-category"> Skills</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Progress bars
                 </h3>
               </div>
               <div className="card-body">
+              {drawCharts &&  <HighchartsReact
+          highcharts={Highcharts}
+          options={skillConfig}
+        />}
+              
              </div>
             </div>
           </div>
