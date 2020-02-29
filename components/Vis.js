@@ -12,15 +12,16 @@ import moment from "moment";
 import { fetchPosts } from "../actions";
 
 export function getDate(tdate) {
-  let p = "";
-  if (tdate == "c" || tdate == "p") {
-    p = moment(new Date()).format("YYYY-MM-DD");
-  }
-  // p = moment(tdate).format('YYYY-MM-DD');
-  p = moment(tdate, ["DD/MM/YYYY"]).format("YYYY-MM-DD");
-  // DateTime.fromFormat(tdates, 'dd/mm/yyyy').toFormat('YYYY-MM-DD');
-  console.log("t", p);
+  const pD =  (tdate === "c" || tdate === "p") ? moment(new Date()).format("DD/MM/YYYY") : tdate
+  const p = moment(pD, ["DD/MM/YYYY"]).format("YYYY-MM-DD");
+ 
   return p;
+}
+
+export function getUTCDate(tdate) {
+  const pD =  (tdate === "c" || tdate === "p") ? moment().format("DD/MM/YYYY") : tdate;
+  const p = moment(pD, ["DD/MM/YYYY"]).format("x");
+  return Number(p);
 }
 class VisTime extends Component {
   constructor(props) {
@@ -71,34 +72,17 @@ class VisTime extends Component {
         title: {
             text: ''
         },
-        categories: ['Prototyping', 'Development', 'Testing'],
+        categories: [],
         reversed: true
     },
+    legend: {},
+        credits: {
+          enabled: false
+        },
     series: [{
         name: '',
         pointWidth: 20,
-        data: [{
-            x: Date.UTC(2014, 10, 21),
-            x2: Date.UTC(2014, 11, 2),
-            y: 0,
-            partialFill: 0.25
-        }, {
-            x: Date.UTC(2014, 11, 2),
-            x2: Date.UTC(2014, 11, 5),
-            y: 1
-        }, {
-            x: Date.UTC(2014, 11, 8),
-            x2: Date.UTC(2014, 11, 9),
-            y: 2
-        }, {
-            x: Date.UTC(2013, 11, 9),
-            x2: Date.UTC(2018, 11, 19),
-            y: 1
-        }, {
-            x: Date.UTC(2018, 11, 10),
-            x2: Date.UTC(2020, 11, 23),
-            y: 2
-        }],
+        data: [],
         dataLabels: {
             enabled: true
         }
@@ -156,7 +140,7 @@ class VisTime extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { notimeline } = this.state;
-    let { items, skillConfig, drawCharts } = this.state;
+    let { items, skillConfig, expConfig, drawCharts } = this.state;
     console.log("nextProps", nextProps.posts);
     if (nextProps.posts !== this.props.posts) {
       const { posts } = nextProps.posts;
@@ -196,6 +180,20 @@ class VisTime extends Component {
                   skillConfig.xAxis.categories.push(itemx.name);
                   skillConfig.series[0].data.push(Number(itemx.percentage));
                 }
+                 if (item.type == "experience") {
+                  newI.type = "point";
+                  newI.content = `${itemx.name} : ${itemx.percentage}`;
+                  expConfig.yAxis.categories.push(itemx.company);
+                  const SD = getUTCDate(itemx.startdate);
+                  const ED = getUTCDate(itemx.enddate)
+                  console.log(`SD ${SD} ED ${ED}`);
+                  const Dateres = {
+            x: getUTCDate(itemx.startdate),
+            x2: getUTCDate(itemx.enddate),
+            y: indexx
+        }
+                  expConfig.series[0].data.push(Dateres);
+                }
                 items.push(newI);
                 console.log("item", newI);
               });
@@ -203,12 +201,14 @@ class VisTime extends Component {
             groups.push(grpi);
           }
         });
-        console.log("contentdata", skillConfig);
+        console.log("expConfig", expConfig);
         this.setState({
           contentdata,
           groups,
           items,
           skillConfig,
+                  expConfig,
+
           drawCharts: true
         });
       }
