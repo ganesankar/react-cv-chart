@@ -265,8 +265,7 @@ class VisTime extends Component {
                   expConfig.series[0].data.push(Dateres);
                 }
                 
-                if (item.type == "education") {
-                  
+                if (item.type == "education") {                  
                   eduConfig.yAxis.categories.push(itemx.name);
                   const Dateres = {
                     x: getUTCDate(itemx.startdate),
@@ -276,6 +275,17 @@ class VisTime extends Component {
                   };
                   eduConfig.series[0].data.push(Dateres);
                 }
+                if (item.type == "awards") {                  
+                  awardConfig.yAxis.categories.push(itemx.name);
+                  const Dateres = {
+                    x: getUTCDate(itemx.startdate),
+                    x2: getUTCDate(itemx.enddate),
+                    y: indexx,
+                    z: itemx.institute
+                  };
+                  awardConfig.series[0].data.push(Dateres);
+                }
+
                 items.push(newI);
                 console.log("item", newI);
               });
@@ -283,14 +293,14 @@ class VisTime extends Component {
             groups.push(grpi);
           }
         });
-        console.log("expConfig", expConfig);
+        console.log("contentdata", contentdata);
         this.setState({
           contentdata,
           groups,
           items,
           skillConfig,
           expConfig,
-
+awardConfig,
           drawCharts: true
         });
       }
@@ -316,9 +326,12 @@ class VisTime extends Component {
       skillConfig,
       drawCharts,
       expConfig,
-      eduConfig
+      eduConfig,
+      awardConfig
     } = this.state;
     console.log("post", posts);
+    
+    const introContent = contentdata.find(o => o.type === 'intro')
     return (
       <div className="page-content-wrapper">
         <div className="row">
@@ -329,6 +342,9 @@ class VisTime extends Component {
         </div>
         <div className="row">
           <div className="col-4">
+          {drawCharts && (
+                  
+               
             <div className="card-user card">
               <div className="card-body">
                 <p className="card-text"></p>
@@ -343,14 +359,12 @@ class VisTime extends Component {
                       className="avatar"
                       src="/black-dashboard-react/static/media/emilyz.9fcf69e5.jpg"
                     />
-                    <h5 className="title">Mike Andrew</h5>
+                    <h3 className="title"> {introContent.name}</h3>
                   </a>
-                  <p className="description">Ceo/Co-Founder</p>
+                  <p className="description"> {introContent.title}</p>
                 </div>
-                <div className="card-description">
-                  Do not be scared of the truth because we need to restart the
-                  human foundation in truth And I love you like Kanye loves
-                  Kanye I love Rick Owens’ bed design but the back is...
+                <div className="card-description" dangerouslySetInnerHTML={{__html: introContent.desc}}>
+                 
                 </div>
               </div>
               <div className="card-footer">
@@ -366,7 +380,7 @@ class VisTime extends Component {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> )}
           </div>{" "}
           <div className="col-8">
             <div className="row">
@@ -453,7 +467,13 @@ class VisTime extends Component {
                   times!
                 </h3>
               </div>
-              <div className="card-body"></div>
+              <div className="card-body">
+              {drawCharts && (
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={awardConfig}
+                  />
+                )}</div>
             </div>
           </div>
         </div>
