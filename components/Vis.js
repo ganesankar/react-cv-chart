@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Timeline from "react-visjs-timeline";
 
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
 import moment from "moment";
 import { fetchPosts } from "../actions";
 
@@ -204,7 +202,7 @@ class VisTime extends Component {
                 </h3>
               </div>
               <div className="card-body">
-              <HighchartsReact highcharts={Highcharts} options={skillConfig} /></div>
+             </div>
             </div>
           </div>
         </div>
