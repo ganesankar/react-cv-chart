@@ -43,8 +43,13 @@ class VisTime extends Component {
     this.state = {
       drawCharts: false,
       expertConfig: {
+         title: false,
+        legend: {},
+        credits: false,
+        subtitle: false,
   chart: {
-    type: "pie"
+    type: "pie",
+     backgroundColor: "#27293d"
   },
   series: [
     {
@@ -421,7 +426,8 @@ awardConfig,
       drawCharts,
       expConfig,
       eduConfig,
-      awardConfig
+      awardConfig,
+      expertConfig
     } = this.state;
     console.log("post", posts);
     
@@ -490,10 +496,10 @@ awardConfig,
               <div className="col-6">
                 <div className="card-chart card">
                   <div className="card-header">
-                    <h5 className="card-category">Expertise</h5>
+                    <h5 className="card-category">Areas I am working in as</h5>
                     <h3 className="card-title">
                       <i className="tim-icons icon-bell-55 text-info"></i>{" "}
-                      763,215
+                      Expertise
                     </h3>
                   </div>
                   <div className="card-body">
@@ -507,10 +513,10 @@ awardConfig,
               <div className="col-6">
                 <div className="card-chart card">
                   <div className="card-header">
-                    <h5 className="card-category"> Skills</h5>
+                    <h5 className="card-category">Progress bars to list </h5>
                     <h3 className="card-title">
                       <i className="tim-icons icon-bell-55 text-info"></i>{" "}
-                      Progress bars
+                       Skills
                     </h3>
                   </div>
                   <div className="card-body">
@@ -531,10 +537,10 @@ awardConfig,
           <div className="col-4">
             <div className="card-chart card">
               <div className="card-header">
-                <h5 className="card-category"> Experience</h5>
+                <h5 className="card-category"> Yes. I've
+                  been around. </h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> Yes. I've
-                  been around.
+                  <i className="tim-icons icon-bell-55 text-info"></i>  Experience
                 </h3>
               </div>
               <div className="card-body">
@@ -550,10 +556,10 @@ awardConfig,
           <div className="col-4">
             <div className="card-chart card">
               <div className="card-header">
-                <h5 className="card-category">Education</h5>
+                <h5 className="card-category">  Lazy
+                  isn't on</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> Lazy
-                  isn't
+                  <i className="tim-icons icon-bell-55 text-info"></i>Education
                 </h3>
               </div>
               <div className="card-body">
@@ -569,10 +575,10 @@ awardConfig,
           <div className="col-4">
             <div className="card-chart card">
               <div className="card-header">
-                <h5 className="card-category"> Awards</h5>
+                <h5 className="card-category">   Happy
+                  times! while getting </h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> Happy
-                  times!
+                  <i className="tim-icons icon-bell-55 text-info"></i>Awards
                 </h3>
               </div>
               <div className="card-body">
@@ -590,9 +596,9 @@ awardConfig,
           <div className="col-6">
             <div className="card-chart card">
               <div className="card-header">
-                <h5 className="card-category">Projects</h5>
+                <h5 className="card-category"> Involved while working around </h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Projects
                 </h3>
               </div>
               <div className="card-body"></div>
@@ -601,9 +607,9 @@ awardConfig,
           <div className="col-6">
             <div className="card-chart card">
               <div className="card-header">
-                <h5 className="card-category"> Other Projects</h5>
+                <h5 className="card-category"> Some things which cant be missed listed in</h5>
                 <h3 className="card-title">
-                  <i className="tim-icons icon-bell-55 text-info"></i> 763,215
+                  <i className="tim-icons icon-bell-55 text-info"></i> Other Projects
                 </h3>
               </div>
               <div className="card-body"></div>
