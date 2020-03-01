@@ -27,6 +27,16 @@ export function getUTCDate(tdate) {
   const p = moment(pD, ["DD/MM/YYYY"]).format("x");
   return Number(p);
 }
+const StyleAxis1 = {
+                fontSize: '13px',
+                fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji'
+            }
+const gridLineColor1 = '#383943';   
+const StyletoolTip1 = {
+        backgroundColor: '#27293d',
+        style: {
+            color: '#F0F0F0'
+        }  } ;   
 class VisTime extends Component {
   constructor(props) {
     super(props);
@@ -39,19 +49,42 @@ class VisTime extends Component {
         subtitle: false,
         chart: {
           type: "column",
-          backgroundColor: "#27293d"
+          backgroundColor: "#27293d",
+          plotBorderColor: '#606063'
         },
+        tooltip:StyletoolTip1,
         xAxis: {
-          categories: []
+          gridLineColor: '#707073',
+          lineColor: '#707073',
+        minorGridLineColor: '#505053',
+        tickColor: '#707073',
+        tickWidth: 1,
+          categories: [],
+          
+          labels: {
+            rotation: -45,
+            style: StyleAxis1
+        }
         },
+        gridLineColor: '#707073',
         yAxis: [
           {
+            gridLineColor: gridLineColor1,
+        tickColor:gridLineColor1,
             title: {
               text: "Percentage"
-            }
-          }
+            },
+          },
         ],
-        series: [{ data: [] }]
+        series: [{ data: [],dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: StyleAxis1
+        } } ]
       },
       expConfig: {
         chart: {
@@ -63,6 +96,8 @@ class VisTime extends Component {
           type: "datetime"
         },
         yAxis: {
+            gridLineColor: gridLineColor1,
+        tickColor:gridLineColor1,
           title: false,
           categories: [],
           reversed: true
@@ -82,6 +117,7 @@ class VisTime extends Component {
               enabled: true,
               color: "#FFFFFF",
               format: "{point.z}",
+              style: StyleAxis1,
               y: 1
             }
           }
@@ -97,6 +133,8 @@ class VisTime extends Component {
           type: "datetime"
         },
         yAxis: {
+            gridLineColor: gridLineColor1,
+        tickColor:gridLineColor1,
           title: false,
           categories: [],
           reversed: true
@@ -116,7 +154,8 @@ class VisTime extends Component {
               enabled: true,
               color: "#FFFFFF",
               format: "{point.z}",
-              y: 1
+              y: 1,
+              style: StyleAxis1
             }
           }
         ]
@@ -132,6 +171,8 @@ class VisTime extends Component {
           type: "datetime"
         },
         yAxis: {
+            gridLineColor: gridLineColor1,
+        tickColor:gridLineColor1,
           title: false,
           categories: [],
           reversed: true
@@ -142,7 +183,7 @@ class VisTime extends Component {
         },
         series: [
           {
-            name: "Experience",
+            name: "Awards",
             pointWidth: 30,
             pointPadding: 0,
             groupPadding: 0,
@@ -151,14 +192,15 @@ class VisTime extends Component {
               enabled: true,
               color: "#FFFFFF",
               format: "{point.z}",
-              y: 1
+              y: 1,
+              style: StyleAxis1
             }
           }
         ]
       },
       isLoading: true,
       loadOnce: false,
-      notimeline: ["intro", "contacts", "social", "expertise", "profile"],
+      notimeline: ["intro", "contacts", "social", "expertise", "profile" , "otherprojects"],
       contentdata: [],
       customTimes: {
         marker: new Date()
@@ -166,7 +208,8 @@ class VisTime extends Component {
       groups: [],
       options: {
         width: "100%",
-        //height:  window.innerHeight,
+        //height:  window.innerHeight,stack: false,
+  showMajorLabels: true,
         orientation: { axis: "top", item: "top" },
         zoomMax: 946080000000,
         zoomMin: 31536000000,
@@ -175,29 +218,20 @@ class VisTime extends Component {
         selectable: true
       },
       items: [
+        
         {
-          start: new Date("06/26/1987"),
-          end: new Date("October 14, 2018 10:57:20"), // end is optional
-          content: "fdfdf"
-        },
-        {
-          id: "D",
+          id: 900001,
           content: "Education",
           start: "1990-06-14",
           end: "2008-01-20",
           type: "background"
         },
         {
-          id: "2ee",
+          id: 900002,
           content: "Experience",
           start: "2009-05-25",
           end: getDate("c"),
           type: "background"
-        },
-        {
-          start: new Date("October 14, 2018 10:58:10"),
-          end: new Date(), // end is optional
-          content: "dfdf"
         }
       ]
     };
@@ -243,18 +277,19 @@ class VisTime extends Component {
 
                 const newI = {
                   start: getDate(itemx.startdate),
-                  end: getDate(itemx.enddate), // end is optional
+                  end: getDate(itemx.enddate || 'c'), // end is optional
                   content: itemx.name || itemx.title,
-                  group: index,
+                 
                   className: item.type
                 };
                 if (item.type == "skills") {
-                  newI.type = "point";
-                  newI.content = `${itemx.name} : ${itemx.percentage}`;
+                 
+                  newI.content = `<i class="fas fa-tools"></i> ${itemx.name} : ${itemx.percentage}`;
                   skillConfig.xAxis.categories.push(itemx.name);
                   skillConfig.series[0].data.push(Number(itemx.percentage));
                 }
                 if (item.type == "experience") {
+                   newI.content = `<i class="fas fa-business-time"></i> ${itemx.name} `; 
                   expConfig.yAxis.categories.push(itemx.company);
                   const Dateres = {
                     x: getUTCDate(itemx.startdate),
@@ -265,7 +300,8 @@ class VisTime extends Component {
                   expConfig.series[0].data.push(Dateres);
                 }
                 
-                if (item.type == "education") {                  
+                if (item.type == "education") {   
+                   newI.content = `<i class="fas fa-graduation-cap"></i> ${itemx.name} `;               
                   eduConfig.yAxis.categories.push(itemx.name);
                   const Dateres = {
                     x: getUTCDate(itemx.startdate),
@@ -275,7 +311,9 @@ class VisTime extends Component {
                   };
                   eduConfig.series[0].data.push(Dateres);
                 }
-                if (item.type == "awards") {                  
+                if (item.type == "awards") {   
+                    newI.type = "point";   
+                     newI.content = `<i class="fas fa-award"></i> ${itemx.name} `;             
                   awardConfig.yAxis.categories.push(itemx.name);
                   const Dateres = {
                     x: getUTCDate(itemx.startdate),
@@ -293,7 +331,7 @@ class VisTime extends Component {
             groups.push(grpi);
           }
         });
-        console.log("contentdata", contentdata);
+        console.log("contentdata", contentdata);console.log("items", items);
         this.setState({
           contentdata,
           groups,
@@ -522,13 +560,15 @@ awardConfig,
                 </h3>
               </div>
               <div className="card-body">
-                <Timeline
+              {drawCharts && (
+                   <Timeline
                   selectHandler={this.selectHandler}
                   options={options}
                   items={items}
-                  groups={groups}
                   customTimes={customTimes}
                 />
+                )}
+               
               </div>
             </div>
           </div>

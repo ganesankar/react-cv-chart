@@ -8,11 +8,32 @@ body {
 }
 
 .vis-item.skills , .vis-item.vis-selected.skills{
-      background-color:none;
-      border-color: orange;
+     background: linear-gradient(90deg, rgb(239, 150, 98) 0%, rgba(0,212,255,0) 100%);
+    border-color: transparent;
+    border-radius: 7px;
+    color: #fff;
+    padding-left: 5px;
     }
-    
-
+    .vis-item.education , .vis-item.vis-selected.education{
+      background-color:#00f2c3;
+      border-color: transparent;
+      background: linear-gradient(90deg, #00f2c3 0%, #00f2c336 100%);
+    border-radius: 7px;
+    color: #fff;
+    padding-left: 5px;
+    }
+   .vis-item.experience , .vis-item.vis-selected.experience{
+      background-color:#e14eca;
+      border-color: #e14eca;
+    }
+  .vis-item.projects , .vis-item.vis-selected.projects{
+      background-color:#1d8cf8;
+      border-color: #1d8cf8;
+    }    
+ .vis-item.awards , .vis-item.vis-selected.awards{
+       background-color:none;
+      border-color: #fd5d93;
+    }    
 .vis-item.skills .vis-item-content{
       padding:1px
     }
