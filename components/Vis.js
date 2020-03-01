@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Timeline from "react-visjs-timeline";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-
+import PieChart from "highcharts-react-official";
 import HighchartsXrange from "highcharts/modules/xrange";
 HighchartsXrange(Highcharts);
 import moment from "moment";
@@ -42,6 +42,23 @@ class VisTime extends Component {
     super(props);
     this.state = {
       drawCharts: false,
+      expertConfig: {
+  chart: {
+    type: "pie"
+  },
+  series: [
+    {
+      data: [
+        {
+          y: 100
+        },
+        {
+          y: 100
+        }
+      ]
+    }
+  ]
+},
       skillConfig: {
         title: false,
         legend: {},
@@ -479,7 +496,12 @@ awardConfig,
                       763,215
                     </h3>
                   </div>
-                  <div className="card-body"></div>
+                  <div className="card-body">
+               
+      {drawCharts && (
+                          <PieChart highcharts={Highcharts} options={expertConfig} />
+                    )}
+                  </div>
                 </div>
               </div>{" "}
               <div className="col-6">
