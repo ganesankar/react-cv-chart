@@ -205,7 +205,9 @@ class VisTime extends Component {
       customTimes: {
         marker: new Date()
       },
-      groups: [],
+      groups: [
+       
+      ],
       options: {
         width: "100%",
         //height:  window.innerHeight,stack: false,
@@ -232,7 +234,35 @@ class VisTime extends Component {
           start: "2009-05-25",
           end: getDate("c"),
           type: "background"
-        }
+        },
+        {          type: "point",
+          id: 66601,
+                  start: '1987-01-20',
+                  end: '1990-06-02', // end is optional
+                  content: '<i class="fas fa-birthday-cake"></i> Born in Tanjore',
+                  className: 'Life'
+                },
+                {          type: "point",
+          id: 66602,
+                  start: '1990-06-02',
+                  end: '2004-06-02', // end is optional
+                  content: '<i class="fas fa-school"></i> Started Schooling',
+                  className: 'Life'
+                },
+                {          type: "point",
+          id: 66603,
+                  start: '2004-06-02',
+                  end: '2008-06-02', // end is optional
+                  content: '<i class="fas fa-map-marked-alt"></i> Moved Trichy',
+                  className: 'Life'
+                },
+                {          type: "point",
+          id: 66604,
+                  start: '2009-08-02',
+                  end: '2008-06-02', // end is optional
+                  content: '<i class="fas fa-map-marked-alt"></i> Moved Chennai',
+                  className: 'Life'
+                }
       ]
     };
   }
@@ -255,6 +285,12 @@ class VisTime extends Component {
       const contentdata = [];
       const content = [];
       const groups = [];
+      groups.push( {
+              id: 0,
+              content: 'LIFE',
+              type: 'life',
+              active:false
+            });
       if (nextProps.posts.length > 0) {
         nextProps.posts.forEach(function(item, index) {
           content.push(item.data);
@@ -269,7 +305,9 @@ class VisTime extends Component {
             console.log("type", item.type);
             var grpi = {
               id: index,
-              content: item.name.toUpperCase()
+              content: item.name.toUpperCase(),
+              type: item.type,
+              active:false
             };
             if (item.values) {
               item.values.forEach(function(itemx, indexx) {
@@ -279,7 +317,7 @@ class VisTime extends Component {
                   start: getDate(itemx.startdate),
                   end: getDate(itemx.enddate || 'c'), // end is optional
                   content: itemx.name || itemx.title,
-                 
+                 ctype: item.type,
                   className: item.type
                 };
                 if (item.type == "skills") {
@@ -328,6 +366,7 @@ class VisTime extends Component {
                 console.log("item", newI);
               });
             }
+            
             groups.push(grpi);
           }
         });
@@ -555,11 +594,26 @@ awardConfig,
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category"> History in one</h5>
-                <h3 className="card-title">
+                <h3 className="card-title float-left">
                   <i className="tim-icons icon-bell-55 text-info"></i> Timeline
                 </h3>
+                   <div data-toggle="buttons" role="group" class="btn-group-toggle float-right btn-group">
+    
+
+        {groups &&
+          groups.length > 0 &&
+          groups.map((item, index) => {
+            return (
+              <label id="2" class="btn-simple btn btn-info btn-sm">
+        <input class="d-none" name="options" type="radio"/><span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">{item.content}</span><span class="d-block d-sm-none"><i class="tim-icons icon-tap-02"></i></span></label>
+              
+            );
+          })}
+</div>
               </div>
               <div className="card-body">
+
+           
               {drawCharts && (
                    <Timeline
                   selectHandler={this.selectHandler}
