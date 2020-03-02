@@ -435,15 +435,15 @@ awardConfig,
     const socialContent = contentdata.find(o => o.type === 'social');
     console.log("socialContent", socialContent);
     return (
-      <div className="page-content-wrapper">
+      <div className="page-content-wrapper container-xl">
         <div className="row">
           <div className="col-12 py-5">
-            <h4>Dashboard</h4>
-            <p className="text-gray">Welcome aboard, Allen Clerk</p>
+            <h4>Ganesan Karuppaiya</h4>
+            <p className="text-gray">Curriculum vitae Dashboard</p>
           </div>
         </div>
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 col-sm-12 col-md-12">
           {drawCharts && (
                   
                
@@ -491,9 +491,9 @@ awardConfig,
               </div>
             </div> )}
           </div>{" "}
-          <div className="col-8">
+          <div className="col-12">
             <div className="row">
-              <div className="col-6">
+              <div className="col-12 col-sm-6 ">
                 <div className="card-chart card">
                   <div className="card-header">
                     <h5 className="card-category">Areas I am working in as</h5>
@@ -510,7 +510,7 @@ awardConfig,
                   </div>
                 </div>
               </div>{" "}
-              <div className="col-6">
+              <div className="col-12 col-sm-6 ">
                 <div className="card-chart card">
                   <div className="card-header">
                     <h5 className="card-category">Progress bars to list </h5>
@@ -534,7 +534,7 @@ awardConfig,
         </div>
 
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 col-sm-6 col-md-12 col-lg-4">
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category"> Yes. I've
@@ -553,7 +553,7 @@ awardConfig,
               </div>
             </div>
           </div>{" "}
-          <div className="col-4">
+          <div className="col-12 col-sm-6 col-lg-4">
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category">  Lazy
@@ -572,7 +572,7 @@ awardConfig,
               </div>
             </div>
           </div>{" "}
-          <div className="col-4">
+          <div className="col-12 col-sm-6 col-lg-4">
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category">   Happy
@@ -593,7 +593,7 @@ awardConfig,
         </div>
 
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-8 ">
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category"> Involved while working around </h5>
@@ -604,7 +604,7 @@ awardConfig,
               <div className="card-body"></div>
             </div>
           </div>{" "}
-          <div className="col-6">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-4">
             <div className="card-chart card">
               <div className="card-header">
                 <h5 className="card-category"> Some things which cant be missed listed in</h5>
