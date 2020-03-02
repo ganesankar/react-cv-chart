@@ -437,13 +437,13 @@ awardConfig,
     return (
       <div className="page-content-wrapper container-xl">
         <div className="row">
-          <div className="col-12 py-5">
+          <div className="col-12 col-lg-4 py-5">
             <h4>Ganesan Karuppaiya</h4>
             <p className="text-gray">Curriculum vitae Dashboard</p>
           </div>
         </div>
         <div className="row">
-          <div className="col-12 col-sm-12 col-md-12">
+          <div className="col-12 col-sm-12 col-md-12 col-lg-4">
           {drawCharts && (
                   
                
@@ -491,7 +491,7 @@ awardConfig,
               </div>
             </div> )}
           </div>{" "}
-          <div className="col-12">
+          <div className="col-12 col-lg-8">
             <div className="row">
               <div className="col-12 col-sm-6 ">
                 <div className="card-chart card">
