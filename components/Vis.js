@@ -323,8 +323,8 @@ class VisTime extends Component {
 
         contentdata.forEach(function(item, index) {
           if (!notimeline.includes(item.type)) {
-            console.log(" ");
-            console.log("type", item.type);
+            //console.log(" ");
+            //console.log("type", item.type);
             var grpi = {
               id: index,
               content: item.name.toUpperCase(),
@@ -333,7 +333,7 @@ class VisTime extends Component {
             };
             if (item.values) {
               item.values.forEach(function(itemx, indexx) {
-                console.log("itemx", itemx);
+                //console.log("itemx", itemx);
 
                 const newI = {
                   start: getDate(itemx.startdate),
@@ -385,14 +385,14 @@ class VisTime extends Component {
                 }
 
                 items.push(newI);
-                console.log("item", newI);
+                //console.log("item", newI);
               });
             }
             
             groups.push(grpi);
           }
         });
-        console.log("contentdata", contentdata);console.log("items", items);
+        //console.log("contentdata", contentdata);console.log("items", items);
         this.setState({
           contentdata,
           groups,
@@ -434,8 +434,10 @@ awardConfig,
     const introContent = contentdata.find(o => o.type === 'intro');
     const socialContent = contentdata.find(o => o.type === 'social');
      const otherProj = contentdata.find(o => o.type === 'otherprojects');
-    console.log("socialContent", socialContent);
-    console.log("otherProj", otherProj);
+     
+     const profile = contentdata.find(o => o.type === 'profile');     
+     const contact = contentdata.find(o => o.type === 'contacts');   
+
     return (
       <div className="page-content-wrapper container-xl">
         <div className="row">
@@ -444,6 +446,7 @@ awardConfig,
             <p className="text-gray">Curriculum vitae Dashboard</p>
           </div>
         </div>
+        
         <div className="row">
           <div className="col-12 col-sm-12 col-md-12 col-lg-4">
           {drawCharts && (
@@ -494,6 +497,86 @@ awardConfig,
             </div> )}
           </div>{" "}
           <div className="col-12 col-lg-8">
+           <div className="row">
+              
+              <div className="col-12 col-sm-6 ">
+                    <div className="card-stats card">
+    <div className="card-body">
+        <div className="row">
+            <div className="col-5">
+                <div className="info-icon text-center icon-warning"><i className="tim-icons icon-chat-33"></i></div>
+            </div>
+            <div className="col-7">
+                <div className="numbers">
+                    <p className="card-category">You can get more about me!</p>
+                    <h3 className="card-title"> Profile Links</h3></div>
+            </div>
+        </div>
+    </div>
+    <div className="card-footer">
+        <hr/>
+       
+    <div className="row ml-0 mr-0">
+    {profile &&
+          profile.values.length > 0 &&
+          profile.values.map((item, index) => {
+            return (
+              <a 
+              rel="noopener noreferrer"
+                href={item.link}
+                target="_blank"
+                className="ml-auto mr-auto col-3 p-1"> <span className="card-stats justify-content-center">
+                    <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
+                  </a>
+              
+            );
+          })}
+        
+       
+    </div>
+    </div>
+</div>
+              </div>
+               <div className="col-12 col-sm-6 ">
+                    <div className="card-stats card">
+    <div className="card-body">
+        <div className="row">
+            <div className="col-5">
+                <div className="info-icon text-center icon-warning"><i className="tim-icons icon-chat-33"></i></div>
+            </div>
+            <div className="col-7">
+                <div className="numbers">
+                    <p className="card-category">You can get more about me!</p>
+                    <h3 className="card-title"> Profile Links</h3></div>
+            </div>
+        </div>
+    </div>
+    <div className="card-footer">
+        <hr/>
+       
+    <div className="row ml-0 mr-0">
+    {contact &&
+          contact.values.length > 0 &&
+          contact.values.map((item, index) => {
+            return (
+              <a 
+              rel="noopener noreferrer"
+                href={item.link}
+                target="_blank"
+                className="ml-auto mr-auto col-3 p-1"> <span className="card-stats justify-content-center">
+                    <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
+                  </a>
+              
+            );
+          })}
+        
+       
+    </div>
+    </div>
+</div>
+              </div>
+              
+            </div>
             <div className="row">
               <div className="col-12 col-sm-6 ">
                 <div className="card-chart card">

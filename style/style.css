@@ -88,3 +88,33 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
   padding: 20px;
   resize: horizontal;
 }
+
+.card-stats .numbers {
+    text-align: right;
+
+}
+.card-stats .numbers .card-category {
+    margin-bottom: 0;
+    color: #9a9a9a;
+}
+.card-stats .numbers .card-title {
+    margin-top: 0;
+}
+.card-stats .card-footer {
+    padding: 0;
+}
+.card-stats .stats {
+    color: hsla(0,0%,100%,.6);
+    margin: 10px 15px;
+    font-size: .9em;
+}
+.card-stats .info-icon {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: #e14eca;
+    background-image: -webkit-gradient(linear,right top,left bottom,from(#e14eca),color-stop(#ba54f5),to(#e14eca));
+    background-image: linear-gradient(to bottom left,#e14eca,#ba54f5,#e14eca);
+    background-size: 210% 210%;
+    background-position: 100% 0;
+}
