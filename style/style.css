@@ -118,3 +118,17 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
     background-size: 210% 210%;
     background-position: 100% 0;
 }
+
+.highcharts-tooltip { padding : 10px;
+ font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    font-size: 14px;
+    line-height: 1.5;}
+.highcharts-tooltip h1,
+.highcharts-tooltip h2,
+.highcharts-tooltip h3,
+.highcharts-tooltip h4,
+.highcharts-tooltip h5{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  margin:0;
+  padding: 0 0 5px 0;
+}
