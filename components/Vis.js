@@ -525,7 +525,7 @@ awardConfig,
               rel="noopener noreferrer"
                 href={item.link}
                 target="_blank"
-                className="ml-auto mr-auto col-3 p-1"> <span className="card-stats justify-content-center">
+                className="ml-auto mr-auto col-3 "> <span className="card-stats justify-content-center">
                     <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
                   </a>
               
@@ -546,8 +546,8 @@ awardConfig,
             </div>
             <div className="col-7">
                 <div className="numbers">
-                    <p className="card-category">You can get more about me!</p>
-                    <h3 className="card-title"> Profile Links</h3></div>
+                    <p className="card-category">Ways to reach me!</p>
+                    <h3 className="card-title"> Contacts</h3></div>
             </div>
         </div>
     </div>
@@ -563,7 +563,7 @@ awardConfig,
               rel="noopener noreferrer"
                 href={item.link}
                 target="_blank"
-                className="ml-auto mr-auto col-3 p-1"> <span className="card-stats justify-content-center">
+                className="ml-auto mr-auto col-3 "> <span className="card-stats justify-content-center">
                     <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
                   </a>
               
