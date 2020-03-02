@@ -366,16 +366,14 @@ class VisTime extends Component {
                     x2: getUTCDate(itemx.enddate),
                     y: indexx,
                     z: itemx.name,
-                    ttName: itemx.name,
-                    ttComp: itemx.company,
-                    ttTime: `${itemx.startdate} - ${itemx.enddate}`
+                    tooTipContent:  `<h3>${itemx.name}</h3><h4>${itemx.company}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`,
+                    
                   };
                   expConfig.tooltip = {
                     shared: false,
                     useHTML: true,
                     headerFormat: '',
-                    pointFormat:
-                      '<h3>{point.ttName}</h3><h4>{point.ttComp}</h4> <h5>{point.ttTime}<h5/>',
+                    pointFormat: '{point.tooTipContent}',
                     footerFormat: '',
                     valueDecimals: 2,
                     backgroundColor: '#27293d',
@@ -415,16 +413,14 @@ class VisTime extends Component {
                     x2: getUTCDate(itemx.enddate),
                     y: indexx,
                     z: itemx.name,
-                    ttName: itemx.name,
-                    ttComp: itemx.institute,
-                    ttTime: `${itemx.startdate} - ${itemx.enddate}`
+                    tooTipContent:  `<h3>${itemx.name}</h3><h4>${itemx.institute}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`,
                   };
                   eduConfig.tooltip = {
                     shared: false,
                     useHTML: true,
                     headerFormat: '',
                     pointFormat:
-                      '<h3>{point.ttName}</h3><h4>{point.ttComp}</h4> <h5>{point.ttTime}<h5/>',
+                      '{point.tooTipContent}',
                     footerFormat: '',
                     valueDecimals: 2,
                     backgroundColor: '#27293d',
