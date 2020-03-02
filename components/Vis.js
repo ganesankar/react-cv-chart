@@ -433,7 +433,9 @@ awardConfig,
     
     const introContent = contentdata.find(o => o.type === 'intro');
     const socialContent = contentdata.find(o => o.type === 'social');
+     const otherProj = contentdata.find(o => o.type === 'otherprojects');
     console.log("socialContent", socialContent);
+    console.log("otherProj", otherProj);
     return (
       <div className="page-content-wrapper container-xl">
         <div className="row">
@@ -612,7 +614,27 @@ awardConfig,
                   <i className="tim-icons icon-bell-55 text-info"></i> Other Projects
                 </h3>
               </div>
-              <div className="card-body"></div>
+              <div className="card-body">
+              <ol className="list-unstyled">
+               {otherProj &&
+          otherProj.values.length > 0 &&
+          otherProj.values.map((item, index) => {
+            return (
+            <li className="pb-1 pl-1 pr-1">
+    <h5 className="mt-0 mb-1">
+       <a 
+              rel="noopener noreferrer"
+                href={item.link || item.portfolio}
+                target="_blank"
+                className="elp">
+                    {item.name}
+                  </a></h5>
+  </li>
+              
+            );
+          })}
+          </ol>
+              </div>
             </div>
           </div>
         </div>

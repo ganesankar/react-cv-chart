@@ -78,3 +78,13 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
 .highcharts-axis.highcharts-color-0 text {
  /*	fill: #7cb5ec;*/
 }
+
+.elp {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  padding: 20px;
+  resize: horizontal;
+}
