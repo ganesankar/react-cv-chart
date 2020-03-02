@@ -464,7 +464,7 @@ awardConfig,
                     <img
                       alt="..."
                       className="avatar"
-                      src="/black-dashboard-react/static/media/emilyz.9fcf69e5.jpg"
+                      src="https://en.gravatar.com/userimage/4994122/50c326e83deff24090a2e8f5bb74d62f.jpg?size=200"
                     />
                     <h3 className="title"> {introContent.name}</h3>
                   </a>
@@ -526,7 +526,7 @@ awardConfig,
                 href={item.link}
                 target="_blank"
                 className="ml-auto mr-auto col-3 "> <span className="card-stats justify-content-center">
-                    <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
+                    {item.name}</span> 
                   </a>
               
             );
@@ -564,7 +564,7 @@ awardConfig,
                 href={item.link}
                 target="_blank"
                 className="ml-auto mr-auto col-3 "> <span className="card-stats justify-content-center">
-                    <i className={` fab  ${item.icon}`}></i> {item.name}</span> 
+                    {item.name}</span> 
                   </a>
               
             );
