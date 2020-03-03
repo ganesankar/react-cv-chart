@@ -9,7 +9,9 @@ import PieChart from 'highcharts-react-official';
 import HighchartsXrange from 'highcharts/modules/xrange';
 import moment from 'moment';
 import { fetchPosts } from '../actions';
+import HighchartsSunburst from 'highcharts/modules/sunburst';
 HighchartsXrange(Highcharts);
+HighchartsSunburst(Highcharts);
 
 export function getDate(tdate) {
   const pD =
@@ -56,10 +58,12 @@ const xRangeConfig = {
     reversed: true
   },
   dataLabels: {
+    align: 'left',
     enabled: true,
     color: '#FFFFFF',
     format: '{point.z}',
     style: StyleAxis1,
+    overflow: false,
     y: 1
   }
 };
@@ -71,31 +75,51 @@ class VisTime extends Component {
     super(props);
     this.state = {
       drawCharts: false,
-      drawTimeLine:true,
-      itemsBack:[],
+      drawTimeLine: true,
+      itemsBack: [],//
       expertConfig: {
         title: false,
-        
+
         legend: {},
         credits: false,
         subtitle: false,
         chart: {
-          type: 'pie',
+          type: 'sunburst',
           backgroundColor: '#27293d'
         },
         series: [
           {
             data: [
+              ,
+              
+            ],
+            allowDrillToNode: true,
+            cursor: 'pointer',
+            dataLabels: {
+              borderWidth: 0,
+              filter: { property: 'innerArcLength', operator: '>', value: 16 },
+              style: { textShadow: false, textOutline: null, color: 'contrast' }
+            },
+            levels: [
               {
-                y: 100
+                level: 1,
+                levelIsConstant: false,
+                dataLabels: {
+                  filter: {
+                    property: 'outerArcLength',
+                    operator: '>',
+                    value: 64
+                  }
+                },
+                colorByPoint: true
               },
-              {
-                y: 100
-              }
+              { level: 2, colorVariation: { key: 'brightness', to: -0.3 } },
+              { level: 3, colorVariation: { key: 'brightness', to: -0.3 } }
             ]
           }
         ]
       },
+
       skillConfig: {
         title: false,
         legend: {},
@@ -229,9 +253,7 @@ class VisTime extends Component {
         'profile',
         'otherprojects'
       ],
-      timelineIcons: [
-        
-      ],
+      timelineIcons: [],
       contentdata: [],
       customTimes: {
         marker: new Date()
@@ -263,22 +285,22 @@ class VisTime extends Component {
           end: getDate('c'),
           type: 'background'
         }
-        
       ]
     };
-    
+
     this.toogleVisGroup = this.toogleVisGroup.bind(this);
   }
   componentDidMount() {
     this.props.fetchPosts();
   }
-  
+
   componentWillReceiveProps(nextProps) {
     const { notimeline } = this.state;
     let {
       items,
       skillConfig,
       expConfig,
+      expertConfig,
       eduConfig,
       awardConfig,
       projectConfig,
@@ -290,7 +312,7 @@ class VisTime extends Component {
       const contentdata = [];
       const content = [];
       const groups = [];
-     
+
       if (nextProps.posts.length > 0) {
         nextProps.posts.forEach(function(item, index) {
           content.push(item.data);
@@ -314,7 +336,7 @@ class VisTime extends Component {
               const AwardGrpList = [];
               const InstituteGrpList = [];
               // eslint-disable-next-line max-statements
-              item.values.forEach(function(itemx, indexx) { 
+              item.values.forEach(function(itemx, indexx) {
                 //console.log("itemx", itemx);
 
                 const newI = {
@@ -326,12 +348,26 @@ class VisTime extends Component {
                 };
                 if (item.type == 'lifeevents') {
                   newI.content = `<i class="${itemx.icon}"></i> ${itemx.name}`;
-                  
                 }
                 if (item.type == 'skills') {
                   newI.content = `<i class="fas fa-tools"></i> ${itemx.name} : ${itemx.percentage}`;
                   skillConfig.xAxis.categories.push(itemx.name);
                   skillConfig.series[0].data.push(Number(itemx.percentage));
+
+                  skillConfig.tooltip = {
+                    shared: false,
+                    useHTML: true,
+                    headerFormat: '',
+                    pointFormat:
+                      '<h4> {point.category}: {point.y}% </h4> {point.y} <h5> <h5/>',
+                    footerFormat: '',
+                    valueDecimals: 0,
+                    backgroundColor: '#27293d',
+                    style: {
+                      color: '#F0F0F0'
+                    }
+                  };
+                  skillConfig.plotOptions = {};
                 }
                 if (item.type == 'experience') {
                   newI.content = `<i class="fas fa-business-time"></i> ${itemx.name} `;
@@ -343,8 +379,7 @@ class VisTime extends Component {
                     x2: getUTCDate(itemx.enddate),
                     y: indexx,
                     z: itemx.name,
-                    tooTipContent:  `<h3>${itemx.name}</h3><h4>${itemx.company}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`,
-                    
+                    tooTipContent: `<h3>${itemx.name}</h3><h4>${itemx.company}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`
                   };
                   expConfig.tooltip = {
                     shared: false,
@@ -360,17 +395,23 @@ class VisTime extends Component {
                   };
                   expConfig.series[0].data.push(Dateres);
                   expConfig.plotOptions = {
-            series: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function() {
-                            alert ('Category: '+ this.category +', value: '+ this.y);
+                    series: {
+                      cursor: 'pointer',
+                      padding: 0.2,
+                      point: {
+                        events: {
+                          click: function() {
+                            alert(
+                              'Category: ' +
+                                this.category +
+                                ', value: ' +
+                                this.y
+                            );
+                          }
                         }
+                      }
                     }
-                }
-            }
-            }
+                  };
                 }
 
                 if (item.type == 'education') {
@@ -390,14 +431,13 @@ class VisTime extends Component {
                     x2: getUTCDate(itemx.enddate),
                     y: indexx,
                     z: itemx.name,
-                    tooTipContent:  `<h3>${itemx.name}</h3><h4>${itemx.institute}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`,
+                    tooTipContent: `<h3>${itemx.name}</h3><h4>${itemx.institute}</h4> <h5>${itemx.startdate} - ${itemx.enddate}<h5/>`
                   };
                   eduConfig.tooltip = {
                     shared: false,
                     useHTML: true,
                     headerFormat: '',
-                    pointFormat:
-                      '{point.tooTipContent}',
+                    pointFormat: '{point.tooTipContent}',
                     footerFormat: '',
                     valueDecimals: 2,
                     backgroundColor: '#27293d',
@@ -444,7 +484,6 @@ class VisTime extends Component {
                 }
 
                 if (item.type == 'projects') {
-                  
                   newI.content = `<i class="fas fa-award"></i> ${itemx.name} `;
                   if (!projectConfig.yAxis.categories.includes(itemx.company)) {
                     ProjCompList.push(itemx.company); //AwardGrpList
@@ -456,6 +495,7 @@ class VisTime extends Component {
                     x: getUTCDate(itemx.startdate),
                     x2: getUTCDate(itemx.enddate),
                     y: yi,
+                    z: itemx.name,
                     ttName: itemx.name,
                     ttComp: itemx.company,
                     ttTime: `${itemx.startdate} - ${itemx.enddate}`
@@ -477,7 +517,7 @@ class VisTime extends Component {
                 }
 
                 items.push(newI);
-                
+
                 //console.log("item", newI);
               });
             }
@@ -487,15 +527,74 @@ class VisTime extends Component {
         });
 
         //console.log("contentdata", contentdata);console.log("items", items);
+
+        const expertiseRaw = contentdata.find(o => o.type === 'expertise');
+
+        let groupKey = 'desc';
+        if (expertiseRaw.values && expertiseRaw.values.length > 0) {
+          let newcontentkey = [];
+          let cs = [];
+          expertiseRaw.values.forEach(function(item) {
+            newcontentkey.push(item[groupKey]);
+          });
+          let uniqkey = Array.from(new Set(newcontentkey));
+          uniqkey.forEach(function(item, index) {
+            let newOb = { id: index, name: item, values: [] };
+            expertiseRaw.values.forEach(function(j) {
+              if (j[groupKey] == item) {
+                newOb.values.push(j);
+              }
+            });
+            cs.push(newOb);
+          });
+          const expC = [];
+         
+          expC.push({ id: '0.0', parent: '',name: 'Skills'});
+          
+          cs.forEach(function(itemX, indeX) {
+            const p = {
+              id: `${indeX + 1}.0`,
+              parent: '0.0',
+              name: itemX.name,
+              value: 1
+            };
+            expC.push(p);
+            itemX.values.forEach(function(itemy, indey) {
+              const py = {
+                id: `${indeX + 1}.${indey + 1}.0`,
+                parent: `${indeX + 1}.0`,
+                name: itemy.name,
+                value: 1
+              };
+              expC.push(py);
+              itemy.values.forEach(function(itemz, indez) {
+                const pz = {
+                  id: `${indeX + 1}.${indey + 1}.${indez + 1}`,
+                  parent: `${indeX + 1}.${indey + 1}.0`,
+                  name: itemz,
+                  value: 1
+                };
+                expC.push(pz);
+              });
+            });
+          });
+          const expD = expC.sort((a, b) =>
+            a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+          );
+          expertConfig.series[0].data = expD;
+
+        }
+
         this.setState({
           contentdata,
           groups,
           items,
-          
-          itemsBack : JSON.parse(JSON.stringify(items)),
+
+          itemsBack: JSON.parse(JSON.stringify(items)),
           skillConfig,
           expConfig,
           awardConfig,
+          expertConfig,
           projectConfig,
           drawCharts: true
         });
@@ -503,29 +602,28 @@ class VisTime extends Component {
     }
   }
   toogleVisGroup = ix => {
-    let { groups, items, itemsBack, drawTimeLine} = this.state;
-     //const otherProj = contentdata.find(o => o.type === 'otherprojects');
-     //
-    groups[ix].active  = !groups[ix].active
-    if(groups[ix].active){
-//array.splice(index, 1);
-console.log('itemsBack',itemsBack);
-   itemsBack.forEach(function(item, index) { 
-     if(item.ctype === groups[ix].ctype ){
-items.push(item)
-     }
+    let { groups, items, itemsBack, drawTimeLine } = this.state;
+    //const otherProj = contentdata.find(o => o.type === 'otherprojects');
+    //
+    groups[ix].active = !groups[ix].active;
+    if (groups[ix].active) {
+      //array.splice(index, 1);
      
-   });
-    }else{
-_.remove(items, {
-    ctype: groups[ix].ctype
-});
+      itemsBack.forEach(function(item, index) {
+        if (item.ctype === groups[ix].ctype) {
+          items.push(item);
+        }
+      });
+    } else {
+      _.remove(items, {
+        ctype: groups[ix].ctype
+      });
     }
-    
-    this.setState({ groups, items, drawTimeLine:false});
-     setTimeout(() => {
-         this.setState({   drawTimeLine:true});
-      }, 1);
+
+    this.setState({ groups, items, drawTimeLine: false });
+    setTimeout(() => {
+      this.setState({ drawTimeLine: true });
+    });
   };
 
   clickHandler(props) {
@@ -553,7 +651,7 @@ _.remove(items, {
       expertConfig,
       drawTimeLine
     } = this.state;
-    console.log('items', items);
+    // console.log('items', items);
 
     //console.log('projectConfig', projectConfig);
     const introContent = contentdata.find(o => o.type === 'intro');
@@ -563,6 +661,10 @@ _.remove(items, {
     const profile = contentdata.find(o => o.type === 'profile');
     const contact = contentdata.find(o => o.type === 'contacts');
 
+    const basicExample = {
+      options: options,
+      items: items
+    };
     return (
       <div className="page-wrapper container-xl">
         <div className="row">
@@ -888,11 +990,14 @@ _.remove(items, {
                     groups.length > 0 &&
                     groups.map((item, index) => {
                       return (
-                        <label id={index} 
-                        onClick={() => this.toogleVisGroup(index)}
-                        className={`btn-simple btn btn-info btn-sm   ${item.active ? ' active ' : '  '}`}
+                        <label
+                          id={index}
+                          onClick={() => this.toogleVisGroup(index)}
+                          className={`btn-simple btn btn-info btn-sm   ${
+                            item.active ? ' active ' : '  '
+                          }`}
                         >
-                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
                             {item.content}
                           </span>
                           <span className="d-block d-sm-none">
@@ -903,7 +1008,7 @@ _.remove(items, {
                     })}
                 </div>
               </div>
-              <div className="card-body">
+              <div className="card-body timlineCard">
                 {drawCharts && drawTimeLine && (
                   <Timeline
                     selectHandler={this.selectHandler}

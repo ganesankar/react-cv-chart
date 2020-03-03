@@ -90,11 +90,11 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
 }
 
 .highcharts-color-0 {
-	fill: #7cb5ec;
-	stroke: #7cb5ec;
+//	fill: #7cb5ec;
+	//stroke: #7cb5ec;
 }
 .highcharts-axis.highcharts-color-0 .highcharts-axis-line {
-	stroke: #7cb5ec;
+//	stroke: #7cb5ec;
 }
 .highcharts-axis.highcharts-color-0 text {
  /*	fill: #7cb5ec;*/
@@ -153,3 +153,5 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
   margin:0;
   padding: 0 0 5px 0;
 }
+
+.timlineCard{ min-height: 300px}
