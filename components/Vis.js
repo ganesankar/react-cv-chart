@@ -1,4 +1,4 @@
-import { map as _map } from 'lodash';
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -71,8 +71,11 @@ class VisTime extends Component {
     super(props);
     this.state = {
       drawCharts: false,
+      drawTimeLine:true,
+      itemsBack:[],
       expertConfig: {
         title: false,
+        
         legend: {},
         credits: false,
         subtitle: false,
@@ -263,10 +266,13 @@ class VisTime extends Component {
         
       ]
     };
+    
+    this.toogleVisGroup = this.toogleVisGroup.bind(this);
   }
   componentDidMount() {
     this.props.fetchPosts();
   }
+  
   componentWillReceiveProps(nextProps) {
     const { notimeline } = this.state;
     let {
@@ -308,7 +314,7 @@ class VisTime extends Component {
               const AwardGrpList = [];
               const InstituteGrpList = [];
               // eslint-disable-next-line max-statements
-              item.values.forEach(function(itemx, indexx) {
+              item.values.forEach(function(itemx, indexx) { 
                 //console.log("itemx", itemx);
 
                 const newI = {
@@ -471,6 +477,7 @@ class VisTime extends Component {
                 }
 
                 items.push(newI);
+                
                 //console.log("item", newI);
               });
             }
@@ -478,11 +485,14 @@ class VisTime extends Component {
             groups.push(grpi);
           }
         });
+
         //console.log("contentdata", contentdata);console.log("items", items);
         this.setState({
           contentdata,
           groups,
           items,
+          
+          itemsBack : JSON.parse(JSON.stringify(items)),
           skillConfig,
           expConfig,
           awardConfig,
@@ -492,6 +502,31 @@ class VisTime extends Component {
       }
     }
   }
+  toogleVisGroup = ix => {
+    let { groups, items, itemsBack, drawTimeLine} = this.state;
+     //const otherProj = contentdata.find(o => o.type === 'otherprojects');
+     //
+    groups[ix].active  = !groups[ix].active
+    if(groups[ix].active){
+//array.splice(index, 1);
+console.log('itemsBack',itemsBack);
+   itemsBack.forEach(function(item, index) { 
+     if(item.ctype === groups[ix].ctype ){
+items.push(item)
+     }
+     
+   });
+    }else{
+_.remove(items, {
+    ctype: groups[ix].ctype
+});
+    }
+    
+    this.setState({ groups, items, drawTimeLine:false});
+     setTimeout(() => {
+         this.setState({   drawTimeLine:true});
+      }, 1);
+  };
 
   clickHandler(props) {
     console.log(props);
@@ -515,9 +550,10 @@ class VisTime extends Component {
       eduConfig,
       awardConfig,
       projectConfig,
-      expertConfig
+      expertConfig,
+      drawTimeLine
     } = this.state;
-    console.log('post', posts);
+    console.log('items', items);
 
     //console.log('projectConfig', projectConfig);
     const introContent = contentdata.find(o => o.type === 'intro');
@@ -853,6 +889,7 @@ class VisTime extends Component {
                     groups.map((item, index) => {
                       return (
                         <label id={index} 
+                        onClick={() => this.toogleVisGroup(index)}
                         className={`btn-simple btn btn-info btn-sm   ${item.active ? ' active ' : '  '}`}
                         >
                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
@@ -867,7 +904,7 @@ class VisTime extends Component {
                 </div>
               </div>
               <div className="card-body">
-                {drawCharts && (
+                {drawCharts && drawTimeLine && (
                   <Timeline
                     selectHandler={this.selectHandler}
                     options={options}
