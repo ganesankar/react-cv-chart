@@ -15,18 +15,20 @@ body {
     background-color: rgba(22, 24, 35, 0.51);
     
 }
-
+.vis-item .vis-item-overflow {
+  overflow: visible;
+}
 vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis-right, .vis-panel.vis-top {
     border: 1px #bfbfbf;
 }
- .vis-item.Life , .vis-item.vis-selected.Life{
+ .vis-item.lifeevents , .vis-item.vis-selected.lifeevents{
     background-color: transparent;
     border-color: transparent;
       color: #fd5d93;
     }
 .vis-item.skills , .vis-item.vis-selected.skills{
-    // background: transparent;
-  //  border-color: linear-gradient(90deg, rgb(239, 150, 98) 0%, rgba(0,212,255,0) 100%);
+    
+    //  border-color: linear-gradient(90deg, rgb(239, 150, 98) 0%, rgba(0,212,255,0) 100%);
    background-color: transparent;
     border-color: transparent;
     border-radius: 7px;
@@ -34,24 +36,32 @@ vis-panel.vis-bottom, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis
     padding-left: 5px;
     }
     .vis-item.education , .vis-item.vis-selected.education{
-      background-color:#00f2c3;
-      border-color: transparent;
-      background: linear-gradient(90deg, #00f2c3 0%, #00f2c336 100%);
-    border-radius: 7px;
-    color: #fff;
+      
+    
+    background-color: #00f2c32e;
+    border-color: #00f2c32e;
+    /* background: linear-gradient(90deg, #00f2c3 0%, #00f2c336 100%); */
+    color: #00f2c3;
     padding-left: 5px;
+
     }
    .vis-item.experience , .vis-item.vis-selected.experience{
-      background-color:#e14eca;
-      border-color: #e14eca;
+      background-color: #e14eca17;
+    border-color: #e14eca40;
+    color: #e14eca;
     }
   .vis-item.projects , .vis-item.vis-selected.projects{
       background-color:#1d8cf8;
       border-color: #1d8cf8;
+      background-color: #1d8cf81f;
+    border-color: #1d8cf81f;
+    color: #1d8cf8;
+
     }    
  .vis-item.awards , .vis-item.vis-selected.awards{
        background-color:none;
       border-color: #fd5d93;
+      color: #fd5d93;
     }    
 .vis-item.skills .vis-item-content{
       padding:1px

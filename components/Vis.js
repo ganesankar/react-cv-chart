@@ -256,39 +256,8 @@ class VisTime extends Component {
           start: '2009-05-25',
           end: getDate('c'),
           type: 'background'
-        },
-        {
-          type: 'point',
-          id: 66601,
-          start: '1987-01-20',
-          end: '1990-06-02', // end is optional
-          content: '<i class="fas fa-birthday-cake"></i> Born in Tanjore',
-          className: 'Life'
-        },
-        {
-          type: 'point',
-          id: 66602,
-          start: '1990-06-02',
-          end: '2004-06-02', // end is optional
-          content: '<i class="fas fa-school"></i> Started Schooling',
-          className: 'Life'
-        },
-        {
-          type: 'point',
-          id: 66603,
-          start: '2004-06-02',
-          end: '2008-06-02', // end is optional
-          content: '<i class="fas fa-map-marked-alt"></i> Moved Trichy',
-          className: 'Life'
-        },
-        {
-          type: 'point',
-          id: 66604,
-          start: '2009-08-02',
-          end: '2008-06-02', // end is optional
-          content: '<i class="fas fa-map-marked-alt"></i> Moved Chennai',
-          className: 'Life'
         }
+        
       ]
     };
   }
@@ -351,6 +320,11 @@ class VisTime extends Component {
                   ctype: item.type,
                   className: item.type
                 };
+                if (item.type == 'lifeevents') {
+                  newI.content = `<i class="${itemx.icon}"></i> ${itemx.name}`;
+                  skillConfig.xAxis.categories.push(itemx.name);
+                  skillConfig.series[0].data.push(Number(itemx.percentage));
+                }
                 if (item.type == 'skills') {
                   newI.content = `<i class="fas fa-tools"></i> ${itemx.name} : ${itemx.percentage}`;
                   skillConfig.xAxis.categories.push(itemx.name);
@@ -467,7 +441,7 @@ class VisTime extends Component {
                 }
 
                 if (item.type == 'projects') {
-                  newI.type = 'point';
+                  
                   newI.content = `<i class="fas fa-award"></i> ${itemx.name} `;
                   if (!projectConfig.yAxis.categories.includes(itemx.company)) {
                     ProjCompList.push(itemx.company); //AwardGrpList
