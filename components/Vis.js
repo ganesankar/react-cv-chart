@@ -226,6 +226,9 @@ class VisTime extends Component {
         'profile',
         'otherprojects'
       ],
+      timelineIcons: [
+        
+      ],
       contentdata: [],
       customTimes: {
         marker: new Date()
@@ -281,12 +284,7 @@ class VisTime extends Component {
       const contentdata = [];
       const content = [];
       const groups = [];
-      groups.push({
-        id: 0,
-        content: 'LIFE',
-        type: 'life',
-        active: false
-      });
+     
       if (nextProps.posts.length > 0) {
         nextProps.posts.forEach(function(item, index) {
           content.push(item.data);
@@ -302,8 +300,8 @@ class VisTime extends Component {
             var grpi = {
               id: index,
               content: item.name.toUpperCase(),
-              type: item.type,
-              active: false
+              ctype: item.type,
+              active: true
             };
             if (item.values) {
               const ProjCompList = [];
@@ -322,8 +320,7 @@ class VisTime extends Component {
                 };
                 if (item.type == 'lifeevents') {
                   newI.content = `<i class="${itemx.icon}"></i> ${itemx.name}`;
-                  skillConfig.xAxis.categories.push(itemx.name);
-                  skillConfig.series[0].data.push(Number(itemx.percentage));
+                  
                 }
                 if (item.type == 'skills') {
                   newI.content = `<i class="fas fa-tools"></i> ${itemx.name} : ${itemx.percentage}`;
@@ -855,13 +852,14 @@ class VisTime extends Component {
                     groups.length > 0 &&
                     groups.map((item, index) => {
                       return (
-                        <label id="2" class="btn-simple btn btn-info btn-sm">
-                          <input class="d-none" name="options" type="radio" />
-                          <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                        <label id={index} 
+                        className={`btn-simple btn btn-info btn-sm   ${item.active ? ' active ' : '  '}`}
+                        >
+                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
                             {item.content}
                           </span>
-                          <span class="d-block d-sm-none">
-                            <i class="tim-icons icon-tap-02"></i>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-tap-02"></i>
                           </span>
                         </label>
                       );
