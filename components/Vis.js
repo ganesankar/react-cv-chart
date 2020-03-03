@@ -667,6 +667,8 @@ class VisTime extends Component {
     };
     return (
       <div className="page-wrapper container-xl">
+      {drawCharts && (
+      <div className=" container-xl">
         <div className="row">
           <div className="col-12 col-lg-4 py-5">
             <h4>Ganesan Karuppaiya</h4>
@@ -884,12 +886,12 @@ class VisTime extends Component {
                 </h3>
               </div>
               <div className="card-body">
-                {drawCharts && (
+                
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={eduConfig}
                   />
-                )}
+               
               </div>
             </div>
           </div>{' '}
@@ -902,12 +904,12 @@ class VisTime extends Component {
                 </h3>
               </div>
               <div className="card-body">
-                {drawCharts && (
+                
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={awardConfig}
                   />
-                )}
+                
               </div>
             </div>
           </div>
@@ -926,12 +928,12 @@ class VisTime extends Component {
                 </h3>
               </div>
               <div className="card-body">
-                {drawCharts && (
+                
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={projectConfig}
                   />
-                )}
+                
               </div>
             </div>
           </div>{' '}
@@ -1009,7 +1011,7 @@ class VisTime extends Component {
                 </div>
               </div>
               <div className="card-body timlineCard">
-                {drawCharts && drawTimeLine && (
+                {drawTimeLine && (
                   <Timeline
                     selectHandler={this.selectHandler}
                     options={options}
@@ -1020,7 +1022,7 @@ class VisTime extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div>  </div>)}
       </div>
     );
   }
